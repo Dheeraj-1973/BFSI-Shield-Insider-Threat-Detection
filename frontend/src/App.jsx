@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 
 // --- PRODUCTION CONFIGURATION ---
-// This logic automatically switches between your Local and Render backend
+// Automatically routes traffic to Render when live, and localhost when testing
 const API_URL = window.location.hostname === "localhost" 
   ? "http://localhost:5000" 
-  : "https://bfsi-backend.onrender.com"; // <-- Ensure this matches your Render URL exactly
+  : "https://bfsi-shield-insider-threat-detection.onrender.com";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
