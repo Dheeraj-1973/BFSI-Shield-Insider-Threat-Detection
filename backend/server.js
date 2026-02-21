@@ -4,9 +4,10 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
-app.use(cors());
+// Middleware - OPEN CORS for Hackathon deployment
+app.use(cors({ origin: "*" }));
 app.use(express.json());
 
 // --- MONGODB CONNECTION ---
@@ -33,17 +34,19 @@ const alertSchema = new mongoose.Schema({
 const User = mongoose.model('User', userSchema);
 const Alert = mongoose.model('Alert', alertSchema);
 
-// --- AUTHENTICATION API ROUTES ---
+// --- ROOT ROUTE ---
+app.get('/', (req, res) => {
+    res.send("🛡️ BFSI Shield Backend is LIVE and Operational!");
+});
 
+// --- AUTHENTICATION API ROUTES ---
 app.post('/api/register', async (req, res) => {
     const { username, password } = req.body;
     try {
         const existingUser = await User.findOne({ username });
         if (existingUser) return res.status(400).json({ message: "Admin already exists." });
-
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
-
         const newUser = new User({ username, password: hashedPassword });
         await newUser.save();
         res.status(201).json({ message: "Admin registered successfully!" });
@@ -57,10 +60,8 @@ app.post('/api/login', async (req, res) => {
     try {
         const user = await User.findOne({ username });
         if (!user) return res.status(400).json({ message: "Admin not found." });
-
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) return res.status(400).json({ message: "Invalid credentials." });
-
         res.status(200).json({ message: "Login successful", username: user.username });
     } catch (err) {
         res.status(500).json({ message: err.message });
@@ -81,15 +82,11 @@ app.post('/api/alerts', async (req, res) => {
     const { employee, department, snippet } = req.body;
     const lowerSnippet = snippet.toLowerCase();
     let assignedRisk = "Low";
-
     const highRiskWords = ['unreleased', 'quit', 'steal', 'confidential', 'ssn', 'credit card', 'hack', 'leak'];
     const mediumRiskWords = ['download', 'personal drive', 'usb', 'bypass', 'external'];
-
     if (highRiskWords.some(word => lowerSnippet.includes(word))) assignedRisk = "High";
     else if (mediumRiskWords.some(word => lowerSnippet.includes(word))) assignedRisk = "Medium";
-
     const newAlert = new Alert({ employee, department, snippet, risk: assignedRisk });
-
     try {
         await newAlert.save();
         const updatedAlerts = await Alert.find().sort({ _id: -1 });
@@ -99,15 +96,14 @@ app.post('/api/alerts', async (req, res) => {
     }
 });
 
-// --- NEW ROUTE: DELETE (ISOLATE) THREAT ---
 app.delete('/api/alerts/:id', async (req, res) => {
     try {
-        await Alert.findByIdAndDelete(req.params.id); // Deletes from MongoDB
-        const updatedAlerts = await Alert.find().sort({ _id: -1 }); // Fetches the new list
-        res.json(updatedAlerts); // Sends updated list to React
+        await Alert.findByIdAndDelete(req.params.id);
+        const updatedAlerts = await Alert.find().sort({ _id: -1 });
+        res.json(updatedAlerts);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
 });
 
-app.listen(PORT, () => console.log(`Secure server running on http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`Secure server running on port ${PORT}`));
