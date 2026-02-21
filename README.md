@@ -1,43 +1,44 @@
-# 🛡️ BFSI Shield: Insider Threat & Signal Detection System
+# 🛡️ BFSI Shield: Insider Threat Signal Detection
 
-**BFSI Shield** is an enterprise-grade cybersecurity command center designed to monitor, intercept, and analyze corporate communications in real-time. Built specifically for the **BFSI (Banking, Financial Services, and Insurance)** sector, it uses Natural Language Processing (NLP) to detect malicious intent and prevent data exfiltration.
+**BFSI Shield** is a high-tech cybersecurity command center designed to monitor, intercept, and analyze corporate communications in real-time. Specifically tailored for the **BFSI (Banking, Financial Services, and Insurance)** sector, it uses Natural Language Processing (NLP) logic to detect malicious intent and prevent data exfiltration.
 
 ---
 
-## 🚀 Key Features
-* **Real-Time Interception**: Captures and scans outgoing employee communications before they leave the network.
-* **Neural Risk Analysis**: Uses a custom-built NLP engine to categorize threats into High, Medium, and Low severity.
-* **Target Risk Leaderboard**: An automated ranking system that identifies high-risk employees based on behavioral history.
-* **Threat Isolation**: Allows security administrators to "Isolate" (remove) critical threats from the live databank instantly.
-* **Secure Authentication**: Admin access protected by salted and hashed passwords using `bcryptjs`.
+## 🚀 Core Functionalities
+* **Secure Admin Node**: Access-controlled terminal protected by `bcryptjs` password hashing.
+* **Comms Intercept Protocol**: Real-time simulation of intercepted employee messages across multiple departments.
+* **Neural Risk Engine**: Custom JavaScript logic that categorizes threats into **High**, **Medium**, and **Low** severity based on keyword vectors.
+* **Target Risk Rankings**: A dynamic leaderboard that calculates and visualizes employee threat levels using historical alert data.
+* **Threat Isolation**: A protocol allowing administrators to "Isolate" and permanently remove threats from the live databank.
 
 ---
 
 ## 🏗️ Technical Architecture (MERN Stack)
-* **Frontend**: React.js with a high-tech "Cyber Command" UI and custom state management.
-* **Backend**: Node.js & Express API handling asynchronous threat scanning.
-* **Database**: MongoDB Atlas cloud-hosted database for persistent logging and security.
+* **Frontend**: React.js with a "Cyber-Command" UI, utilizing glassmorphism and motion effects.
+* **Backend**: Node.js & Express.js REST API for asynchronous threat processing.
+* **Database**: MongoDB Atlas cloud-hosted database for persistent, encrypted storage.
+* **Deployment**: Backend hosted on **Render**, Frontend hosted on **Vercel**.
 
 ---
 
-## 📊 Evaluation Criteria Focus
-| Criteria | Implementation |
+## 📊 Evaluation Metrics
+| Criteria | Implementation Status |
 | :--- | :--- |
-| **Innovation** | Real-time pattern matching for sensitive data like SSNs and credit cards. |
-| **Architecture** | Scalable decoupled MERN architecture with live cloud integration. |
-| **Functionality** | Full CRUD operations (Post threats, Fetch logs, Isolate/Delete incidents). |
-| **Impact** | Protects BFSI firms from multimillion-dollar internal data breaches. |
+| **Innovation** | Real-time signal detection for sensitive financial data strings. |
+| **Architecture** | Scalable, decoupled MERN architecture with live cloud integration. |
+| **Functionality** | Full CRUD operations: Create (Scan), Read (Logs), and Delete (Isolate). |
+| **Security** | Industry-standard password salting and hashing protocols. |
 
 ---
 
-## 🛠️ Installation & Setup
+## 🛠️ Setup & Installation
 
-### 1. Prerequisites
-* Node.js installed.
-* A MongoDB Atlas Cluster link.
+1. **Clone Repository**
+2. **Backend**: Navigate to `/backend`, run `npm install` followed by `npm run dev`.
+3. **Frontend**: Navigate to `/frontend`, run `npm install` followed by `npm run dev`.
 
-### 2. Backend Setup
-```bash
-cd backend
-npm install
-npm run dev
+---
+
+## 👤 Developer
+**Dheeraj Nallamotu**
+*B.Tech CSE 3rd Year, KL University*

@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 
+// --- PRODUCTION CONFIGURATION ---
+// IMPORTANT: Replace the link below with your actual Render backend URL
+const API_URL = "https://bfsi-backend.onrender.com";
+
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [activeUser, setActiveUser] = useState('');
@@ -14,7 +18,7 @@ function App() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      fetch('http://localhost:5000/api/alerts')
+      fetch(`${API_URL}/api/alerts`)
         .then((res) => res.json())
         .then((data) => setAlertsData(data))
         .catch((err) => console.error(err));
@@ -31,7 +35,7 @@ function App() {
     const endpoint = authMode === 'login' ? '/api/login' : '/api/register';
     
     try {
-      const response = await fetch(`http://localhost:5000${endpoint}`, {
+      const response = await fetch(`${API_URL}${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(authForm),
@@ -64,7 +68,7 @@ function App() {
     e.preventDefault();
     if (!threatForm.employee || !threatForm.snippet) return;
 
-    fetch('http://localhost:5000/api/alerts', {
+    fetch(`${API_URL}/api/alerts`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(threatForm),
@@ -76,14 +80,13 @@ function App() {
       });
   };
 
-  // --- NEW FUNCTION: Handle ISOLATE Button Click ---
   const handleIsolate = (id) => {
-    fetch(`http://localhost:5000/api/alerts/${id}`, {
+    fetch(`${API_URL}/api/alerts/${id}`, {
       method: 'DELETE',
     })
       .then((res) => res.json())
       .then((updatedData) => {
-        setAlertsData(updatedData); // Updates the table instantly
+        setAlertsData(updatedData);
       })
       .catch((err) => console.error("Error isolating threat:", err));
   };
@@ -265,7 +268,6 @@ function App() {
                       <td>{alert.department}</td>
                       <td><em>"{alert.snippet}"</em></td>
                       <td><span className={`badge ${alert.risk.toLowerCase()}`}>{alert.risk}</span></td>
-                      {/* UPDATED BUTTON: Added onClick event to trigger handleIsolate */}
                       <td><button className="action-btn" onClick={() => handleIsolate(alert._id)}>ISOLATE</button></td>
                     </tr>
                   ))}
